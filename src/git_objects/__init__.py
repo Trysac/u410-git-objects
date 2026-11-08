@@ -1,21 +1,45 @@
-"""Pure Python zero-dependency reader and writer for Git object stores, packed refs, and packfiles v2."""
+"""Pure Python zero-dependency Git object store reader and writer."""
 
 from __future__ import annotations
 
-__all__ = ["__version__", "normalize"]
+from git_objects.errors import (
+    CorruptObjectError,
+    DeltaDepthExceededError,
+    GitObjectsError,
+    InvalidRefError,
+    ObjectNotFoundError,
+    ObjectSizeLimitError,
+    PackParseError,
+    RefUpdateError,
+)
+from git_objects.models import GitCommit, GitObject, GitTag, GitTreeEntry, TreeChange
+from git_objects.store import ObjectStore
 
 __version__ = "0.1.0"
 
+__all__ = [
+    "CorruptObjectError",
+    "DeltaDepthExceededError",
+    "GitCommit",
+    "GitObject",
+    "GitObjectsError",
+    "GitTag",
+    "GitTreeEntry",
+    "InvalidRefError",
+    "ObjectNotFoundError",
+    "ObjectSizeLimitError",
+    "ObjectStore",
+    "PackParseError",
+    "RefUpdateError",
+    "TreeChange",
+    "__version__",
+    "normalize",
+]
 
-def normalize(value: str) -> str:
-    """Return ``value`` trimmed and lower-cased.
 
-    Placeholder API created by the template: replace it with the utility's real behavior.
-
-    Raises:
-        ValueError: if ``value`` is empty or only whitespace.
-    """
-    cleaned = value.strip()
-    if not cleaned:
-        raise ValueError("value must not be empty")
-    return cleaned.lower()
+def normalize(text: str) -> str:
+    """Normalize a string by stripping surrounding whitespace and converting to lowercase."""
+    stripped = text.strip()
+    if not stripped:
+        raise ValueError("text must not be empty")
+    return stripped.lower()

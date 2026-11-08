@@ -1,29 +1,11 @@
 # Architecture
 
-## Purpose
+`trysac-git-objects` provides standard-library Git object and packfile parsing.
 
-`trysac-git-objects` is a small, dependency-free Python library: Pure Python zero-dependency reader and writer for Git object stores, packed refs, and packfiles v2.
+## Components
 
-## Shape
-
-```text
-caller code --> git_objects (public API in __init__.py)
-                    |
-                    +-- pure functions, no I/O, no global state
-```
-
-- **Public API**: the names listed in `__all__` of `src/git_objects/__init__.py`. Anything else is
-  internal and may change without a major version.
-- **Errors**: invalid input raises built-in exceptions (`ValueError`, `TypeError`) with a clear
-  message; the library never prints or exits.
-- **Side effects**: none. If a feature needs I/O, isolate it in its own module behind a small
-  interface and record the choice in an ADR.
-
-## Quality contract
-
-`scripts/check.py` is the single definition of the gates; `fabrica.json` tells the factory and CI
-how to run it. See [TESTING.md](TESTING.md).
-
-## Decisions
-
-Architecture decisions are recorded in [decisions/](decisions/) as numbered ADRs.
+1. **`git_objects.store`**: `ObjectStore` orchestrates loose files, packed refs (`.git/packed-refs`), and indexed packfiles (`.git/objects/pack/*.pack`).
+2. **`git_objects.pack`**: Direct binary parsing and writing of Git Packfile v2 and Index v2 formats, resolving `OFS_DELTA` and `REF_DELTA` chains with an LRU cache.
+3. **`git_objects.delta`**: Low-level variable-length integer and byte copy/insert instruction processor for pack delta decompression and generation.
+4. **`git_objects.parsers`**: Serializers and deserializers for Git trees, commits, and annotated tags.
+5. **`git_objects.adapters`**: Optional integration adapters with `trysac-near-dup-detector` (for fuzzy rename similarity diffing) and `trysac-commit-msg-lint` (for commit convention validation).
