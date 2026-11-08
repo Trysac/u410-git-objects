@@ -347,7 +347,7 @@ def test_cli_cat_file_and_hash_object(
     monkeypatch.chdir(tmp)
 
     test_file = tmp / "test.txt"
-    test_file.write_text("cli test blob\n")
+    test_file.write_bytes(b"cli test blob\n")  # bytes: the same 14 bytes on Windows and Linux
 
     # hash-object
     ret = main(["hash-object", "-w", str(test_file)])
@@ -372,7 +372,7 @@ def test_cli_cat_file_and_hash_object(
     ret = main(["cat-file", "-s", blob_oid])
     assert ret == 0
     captured = capsys.readouterr()
-    assert captured.out.strip() == "15"
+    assert captured.out.strip() == "14"
 
 
 def test_cli_log_and_update_ref(
