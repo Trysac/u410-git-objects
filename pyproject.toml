@@ -19,11 +19,22 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+git-objects = "git_objects.__main__:main"
+
 [project.urls]
 Homepage = "https://github.com/Trysac/u410-git-objects"
 Source = "https://github.com/Trysac/u410-git-objects"
 Issues = "https://github.com/Trysac/u410-git-objects/issues"
 Changelog = "https://github.com/Trysac/u410-git-objects/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+similarity = [
+    "trysac-near-dup-detector",
+]
+lint = [
+    "trysac-commit-msg-lint",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -39,6 +50,7 @@ include = ["src", "tests", "docs", "README.md", "LICENSE", "CHANGELOG.md", "SECU
 [dependency-groups]
 dev = [
     "bandit>=1.9.4",
+    "hypothesis>=6.100,<7",
     "mypy>=2.4.1",
     "pip-audit>=2.10.1",
     "pytest>=9.2.0",
@@ -75,3 +87,7 @@ branch = true
 [tool.coverage.report]
 fail_under = 85
 show_missing = true
+
+[tool.uv.sources]
+trysac-near-dup-detector = { git = "https://github.com/Trysac/u018-near-dup-detector", rev = "v0.1.0" }
+trysac-commit-msg-lint = { git = "https://github.com/Trysac/u172-commit-msg-lint", rev = "v0.1.0" }

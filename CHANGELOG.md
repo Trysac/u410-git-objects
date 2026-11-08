@@ -9,4 +9,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Implement pure-Python Git object store with loose objects, packfile v2 reader/writer, refs, and CLI.
 - Initial project structure from the factory utility template.
