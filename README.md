@@ -8,8 +8,10 @@ Tools analyzing or manipulating Git repositories without spawning shell processe
 
 ## Installation
 
+Not published to PyPI yet. Install it from GitHub:
+
 ```sh
-pip install trysac-git-objects
+pip install "git+https://github.com/Trysac/u410-git-objects"
 ```
 
 Optional extras:
